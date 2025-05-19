@@ -1,0 +1,96 @@
+create database testing
+
+use testing
+
+create table ProductType(
+	ProductTypeId int primary key,
+	ProductType varchar(50)
+)
+
+create table BrandName(
+	BrandNameId int primary key,
+	BrandName varchar(50)
+)
+
+create table Product(
+	ProductId int primary key,
+	ProductName varchar(50),
+	ProductTypeId int foreign key(ProductTypeId) references ProductType(ProductTypeId)
+);
+
+create table BrandProductMapping(
+	MappingId int primary key,
+	ProductId int foreign key(ProductId) references Product(ProductId),
+	BrandNameId int foreign key(BrandNameId) references BrandName(BrandNameId),
+	ActualPrice float
+)
+
+create table BrandDiscountMapping(
+	BrandDiscountMappingId int primary key,
+	BrandProductMappingId int foreign key(BrandProductMappingID) references BrandProductMapping(MappingId),
+	Discount decimal(4,2),
+	StartDate datetime,
+	EndDate datetime
+)
+
+insert into ProductType values(1,'electronics')
+insert into ProductType values(2,'Grocery')
+insert into ProductType values(3,'Bakery')
+insert into ProductType values(4,'clothing')
+
+insert into BrandName values(1,'lg')
+insert into BrandName values(2,'Panasonic')
+insert into BrandName values(3,'Britania')
+insert into BrandName values(4,'Balaji')
+insert into BrandName values(5,'Amul')
+insert into BrandName values(6,'Lays')
+insert into BrandName values(7,'Reliance')
+insert into BrandName values(8,'D-Mart')
+insert into BrandName values(9,'Ajio')
+
+insert into Product values(1,'AC',1)
+insert into Product values(2,'phone',1)
+insert into Product values(3,'wafer',2)
+insert into Product values(4,'cake',3)
+insert into Product values(5,'shirt',4)
+insert into Product values(6,'laptop',1)
+insert into Product values(7,'papad',2)
+insert into Product values(8,'paav',3)
+insert into Product values(9,'cargo pants',4)
+insert into Product values(10,'t-shirt',4)
+insert into Product values(11,'masoor dal',2)
+insert into Product values(12,'pastry',3)
+
+insert into BrandProductMapping values(1,1,1,15000)
+insert into BrandProductMapping values(2,2,2,10000)
+insert into BrandProductMapping values(3,3,4,20)
+insert into BrandProductMapping values(4,4,1,500)
+insert into BrandProductMapping values(5,5,9,500)
+insert into BrandProductMapping values(6,6,2,15000)
+insert into BrandProductMapping values(7,7,4,100)
+insert into BrandProductMapping values(8,8,3,50)
+insert into BrandProductMapping values(9,9,9,700)
+insert into BrandProductMapping values(10,10,7,200)
+insert into BrandProductMapping values(11,11,8,100)
+insert into BrandProductMapping values(12,12,5,150)
+
+insert into BrandDiscountMapping values(1,1,10,2025-05-10,2025-05-27)
+insert into BrandDiscountMapping values(2,2,15,2025-05-15,2025-05-27)
+insert into BrandDiscountMapping values(3,3,5,2025-05-01,2025-05-27)
+insert into BrandDiscountMapping values(4,4,7,2025-03-10,null)
+insert into BrandDiscountMapping values(5,5,0,null,null)
+insert into BrandDiscountMapping values(6,6,20,2025-02-03,2025-05-25)
+insert into BrandDiscountMapping values(7,7,0,2025-05-04,2025-07-04)
+insert into BrandDiscountMapping values(8,8,5,2025-05-25,2025-06-03)
+insert into BrandDiscountMapping values(9,9,7,null,null)
+insert into BrandDiscountMapping values(10,10,0,2025-05-10,2025-05-27)
+insert into BrandDiscountMapping values(11,11,0,2025-05-10,2025-05-27)
+insert into BrandDiscountMapping values(12,12,9,2025-05-10,2025-05-27)
+
+
+select count(ProductId) from Product;
+
+select count(c.ProductType) from Product p
+join ProductType c on p.ProductTypeId = c.ProductTypeId
+where c.ProductType = 'electronics';
+
