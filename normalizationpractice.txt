@@ -88,9 +88,18 @@ insert into BrandDiscountMapping values(11,11,0,2025-05-10,2025-05-27)
 insert into BrandDiscountMapping values(12,12,9,2025-05-10,2025-05-27)
 
 
-select count(ProductId) from Product;
+1. select count(ProductId) from Product;
 
-select count(c.ProductType) from Product p
-join ProductType c on p.ProductTypeId = c.ProductTypeId
-where c.ProductType = 'electronics';
+2. select count(c.ProductType) from Product p
+	join ProductType c on p.ProductTypeId = c.ProductTypeId
+	where c.ProductType = 'electronics';
+
+3. 
+
+
+
+
+4. select min(p.ActualPrice) from BrandProductMapping p
+	join ProductType a on p.MappingId = a.ProductTypeId
+	where a.ProductType = 'Grocery';
 
