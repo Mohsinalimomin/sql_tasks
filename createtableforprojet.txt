@@ -1,0 +1,90 @@
+create database project
+
+use project
+create table TblTypes
+(
+TypeId int primary key,
+TypeName varchar(50)
+);
+
+insert into TblTypes values(1,'UserType');
+insert into TblTypes values(2,'LocationType');
+insert into TblTypes values(3,'PaymentType');
+
+
+create table TblTypeValues
+(ValuesId int primary key,
+TypeId int foreign key (TypeId) references TblTypes(TypeId),
+value varchar(50)
+);
+
+
+insert into TblTypeValues values(1,1,'Admin');
+insert into TblTypeValues values(2,1,'Service Provider');
+insert into TblTypeValues values(3,1,'User');
+insert into TblTypeValues values(4,2,'Area');
+insert into TblTypeValues values(5,2,'City');
+insert into TblTypeValues values(6,2,'State');
+insert into TblTypeValues values(7,3,'Cash');
+insert into TblTypeValues values(8,3,'UPI');
+insert into TblTypeValues values(9,3,'Cards');
+insert into TblTypeValues values(10,3,'Coupons');
+
+
+
+create table TblCategory
+(CategoryId int primary key,
+ CategoryName varchar(50)
+)
+
+insert into TblCategory values(1,'Beauty');
+insert into TblCategory values(2,'Home');
+
+create table TblCategorySub(
+CategorySubId int primary key,
+CategorySubName varchar(50),
+CategoryId int foreign key references TblCategory(CategoryId)
+);
+
+insert into TblCategorySub values(1,'massage',1);
+insert into TblCategorySub values(2,'spa',1);
+insert into TblCategorySub values(3,'cleaning',2);
+insert into TblCategorySub values(4,'plumber',2);
+insert into TblCategorySub values(5,'electrician',2);
+
+create table TblCategoryList(
+CategoryListId int primary key,
+CategoryListName varchar(50),
+CategorySubId int foreign key references TblCategorySub(CategorySubId)
+);
+
+insert into TblCategoryList values(1,'prime',1);
+insert into TblCategoryList values(2,'royale',1);
+insert into TblCategoryList values(3,'Luxe',2);
+insert into TblCategoryList values(4,'Ayurveda',2);
+insert into TblCategoryList values(5,'kichen',3);
+insert into TblCategoryList values(6,'Fullhouse',3);
+insert into TblCategoryList values(7,'Tap',4);
+insert into TblCategoryList values(8,'Basin & sink',4);
+insert into TblCategoryList values(9,'Fan',5);
+insert into TblCategoryList values(10,'Mcb',5);
+
+create table TblService(
+ServiceId int primary key,
+ServiceName varchar(50),
+CategoryListId int foreign key references TblCategoryList(CategoryListId),
+price decimal(10,2),
+TimeTaken varchar(50)
+);
+
+insert into TblService values(1,'Back pain relief',1,(500),'20 minutes');
+insert into TblService values(2,'Hair cut',2,(250),'40 minutes');
+insert into TblService values(3,'Abhaya therapy',3,(700),'30 minutes');
+insert into TblService values(4,'Baliness therapy',4,(650),'30 minutes');
+insert into TblService values(5,'whole kichen clean',5,(500),'45 minutes');
+insert into TblService values(6,'Full house cleaning',6,(2000),'120 minutes');
+insert into TblService values(7,'tap change',7,(200),'10 minutes');
+insert into TblService values(8,'Basin installation',8,(700),'40 minutes');
+insert into TblService values(9,'fan installation',9,(200),'15 minutes');
+insert into TblService values(10,'fan uninstallation',9,(150),'15 minutes');
+insert into TblService values(11,'mcb change',10,(200),'20 minutes');
