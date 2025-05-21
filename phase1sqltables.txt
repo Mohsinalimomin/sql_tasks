@@ -1,0 +1,172 @@
+create database Phase1
+
+use Phase1
+
+create table TblOtp(
+OTPId int primary key identity,
+MobileNumber varchar(10),
+OTP int,
+ExpiryTime datetime,
+IsUsed bit
+);
+
+insert into TblOtp values(1234567890,123456,'2025-05-21 16:41:43.263',0);
+insert into TblOtp values(2345678901,111111,'2025-05-22 16:41:43.263',0);
+insert into TblOtp values(3456789012,222222,'2025-05-22 16:41:43.263',0);
+insert into TblOtp values(4567890123,333333,'2025-05-23 16:41:43.263',0);
+
+create table TblUser(
+UserId int primary key identity,
+MobileNumber varchar(10) unique,
+FirstName varchar(50),
+MiddleName varchar(50),
+LastName varchar(50)
+);
+
+
+insert into TblUser values(1234567890,'naitik',null,null);
+insert into TblUser values(2345678901,'mohsin','ali','momin');
+insert into TblUser values(3456789012,'paresh',null,null);
+insert into TblUser values(4567890123,'alpesh',null,'gami');
+
+create table TblCategory(
+CategoryId int primary key identity,
+CategoryName varchar(50)
+);
+
+insert into TblCategory values('home');
+insert into TblCategory values('beauty');
+
+create table TblSubCategory(
+SubCategoryId int primary key,
+SubCategoryName varchar(50),
+CategoryId int,
+SubCatId int
+);
+
+insert into TblSubCategory values(1,'plumber',1,null);
+insert into TblSubCategory values(2,'electrician',1,null);
+insert into TblSubCategory values(3,'spa',2,null);
+insert into TblSubCategory values(4,'massage',2,null);
+insert into TblSubCategory values(5,'Basin & sink',null,1);
+insert into TblSubCategory values(6,'fan',null,2);
+insert into TblSubCategory values(7,'prime',null,3);
+insert into TblSubCategory values(8,'royal',null,4);
+
+create table TblServices(
+ServicesId int primary key identity,
+ServiceName varchar(50),
+SubCategoryId int foreign key references TblSubCategory,
+Price decimal(10,2),
+TimeTaken varchar(50)
+);
+
+insert into TblServices values('Basin installation',5,'300','60 minutes');
+insert into TblServices values('Basin relacement',5,'500','80 minutes');
+insert into TblServices values('fan replaceement',6,'250','30 minutes');
+insert into TblServices values('fan installation',6,'200','20 minutes');
+insert into TblServices values('pain relief',7,'800','60 minutes');
+insert into TblServices values('signature therapy',8,'1000','60 minutes');
+
+create table TblCountry(
+CountryId int primary key identity,
+CountryName varchar(50),
+);
+
+insert into TblCountry values('india');
+insert into TblCountry values('japan');
+insert into TblCountry values('china');
+insert into TblCountry values('usa');
+insert into TblCountry values('russia');
+
+create table TblState(
+StateId int primary key identity,
+StateName varchar(50),
+CountryId int foreign key references TblCountry
+);
+
+insert into TblState values('gujarat',1);
+insert into TblState values('MP',1);
+insert into TblState values('maharastra',1);
+insert into TblState values('rajastan',1);
+insert into TblState values('punjab',1);
+insert into TblState values('delhi',1);
+insert into TblState values('jummu & kashmir',1);
+insert into TblState values('kerla',1);
+insert into TblState values('Los angles',4);
+insert into TblState values('Tokyo',2);
+insert into TblState values('Beijing',3);
+insert into TblState values('moscow',5);
+
+create table TblCity(
+CityId int primary key identity,
+CityName varchar(50),
+StateId int foreign key references TblState
+);
+
+insert into TblCity values('ahmedabad',1);
+insert into TblCity values('vadodara',1);
+insert into TblCity values('gandhinagar',1);
+insert into TblCity values('surat',1);
+insert into TblCity values('rajkot',1);
+insert into TblCity values('mehsana',1);
+insert into TblCity values('bhopal',2);
+insert into TblCity values('mumbai',3);
+insert into TblCity values('jaipur',4);
+insert into TblCity values('amritsar',5);
+insert into TblCity values('srinagar',7);
+
+create table TblArea(
+AreaId int primary key identity,
+AreaName varchar(50),
+PinCode int,
+CityId int foreign key references TblCity
+);
+
+insert into TblArea values('ambli',380058,1);
+insert into TblArea values('bapunagar',380024,1);
+insert into TblArea values('Ellisbridge',380006,1);
+insert into TblArea values('Ghatlodia',380061,1);
+insert into TblArea values('gota',382481,1);
+insert into TblArea values('Juhapura',380055,1);
+insert into TblArea values('Navrangpura',380009,1);
+insert into TblArea values('Satellite',380015,1);
+insert into TblArea values('Thaltej',380059,1);
+insert into TblArea values('sola',380060,1);
+insert into TblArea values('Akota',390020,2);
+insert into TblArea values('Bhayli',391410,2);
+insert into TblArea values('Gift City',382355,3);
+insert into TblArea values('Sector 6',382006,3);
+insert into TblArea values('Sector 16',382016,3);
+insert into TblArea values('Fulpada',395008,4);
+insert into TblArea values('Rajkot City',360001,5);
+insert into TblArea values('Mehsana City',384001,6);
+insert into TblArea values('Bhopal G.P.O',462001,7);
+insert into TblArea values('nariman Point',400021,8);
+insert into TblArea values('Jaipur G.P.O',302001,9);
+insert into TblArea values('Amritsar City',143001,10);
+insert into TblArea values('Rajbagh',190008,11);
+
+create table TblServiceAreaMapping(
+MappingId int primary key identity,
+ServicesId int foreign key references TblServices,
+AreaId int foreign key references TblArea
+);
+
+create table TblCart(
+CartId int primary key identity,
+Price decimal(10,2)
+);
+
+create table TblServiceCartMapping(
+MappingId int primary key identity,
+ServicesId int foreign key references TblServices,
+CartId int foreign key references TblCart
+);
+
+create table TblUserCartMapping(
+MappingId int primary key identity,
+UserId int foreign key references TblUser,
+CartId int foreign key references TblCart
+);
+
