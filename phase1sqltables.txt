@@ -170,3 +170,10 @@ UserId int foreign key references TblUser,
 CartId int foreign key references TblCart
 );
 
+create table TblOffer(
+OfferId int primary key identity,
+ServicesId int foreign key references TblServices,
+StartTime DateTime,
+EndTime DateTime,
+Discount decimal(4,2)
+);
